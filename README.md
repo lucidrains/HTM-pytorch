@@ -2,7 +2,7 @@
 
 ## Hierarchical Transformer Memory (HTM) - Pytorch (wip)
 
-Implementation of <a href="https://arxiv.org/abs/2105.14039">Hierarchical Transformer Memory</a> (HTM) for Pytorch. This Deepmind paper proposes a simple method to allow transformers to attend to memories of the past efficiently.
+Implementation of <a href="https://arxiv.org/abs/2105.14039">Hierarchical Transformer Memory</a> (HTM) for Pytorch. This Deepmind paper proposes a simple method to allow transformers to attend to memories of the past efficiently. I will also attempt to generalize this to a hierarchy of any depth.
 
 ## Citations
 
