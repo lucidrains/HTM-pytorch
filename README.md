@@ -1,3 +1,5 @@
+<img src="./htm.png" width="500px"></img>
+
 ## Hierarchical Transformer Memory (HTM) - Pytorch (wip)
 
 Implementation of <a href="https://arxiv.org/abs/2105.14039">Hierarchical Transformer Memory</a> (HTM) for Pytorch. This Deepmind paper proposes a simple method to allow transformers to attend to memories of the past efficiently.
