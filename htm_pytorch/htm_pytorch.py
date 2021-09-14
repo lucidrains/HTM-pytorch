@@ -170,7 +170,7 @@ class HTMAttention(nn.Module):
         # select the topk memories
 
         memories = repeat(memories, 'b m j d -> b m i j d', i = query_len)
-        mem_topk_indices = repeat(topk_indices, 'b i m -> b m i j d', j = mem_chunk_size, d = memories.shape[-1])
+        mem_topk_indices = repeat(topk_indices, 'b i m -> b m i j d', j = mem_chunk_size, d = dim)
         selected_memories = memories.gather(1, mem_topk_indices)
 
         # positional encoding
