@@ -200,3 +200,20 @@ class HTMAttention(nn.Module):
         weighted_output = within_mem_output * rearrange(weights, 'b i m -> b m i ()')
         output = weighted_output.sum(dim = 1)
         return output
+
+# HTM Block
+
+class HTMBlock(nn.Module):
+    def __init__(self, dim, **kwargs):
+        super().__init__()
+        self.norm = nn.LayerNorm(dim)
+        self.attn = HTMAttention(dim = dim, **kwargs)
+    def forward(
+        self,
+        queries,
+        memories,
+        mask = None
+    ):
+        queries = self.norm(queries)
+        out = self.attn(queries, memories, mask = mask) + queries
+        return out
