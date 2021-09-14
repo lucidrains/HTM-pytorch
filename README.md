@@ -1,6 +1,6 @@
 <img src="./htm.png" width="500px"></img>
 
-## Hierarchical Transformer Memory (HTM) - Pytorch (wip)
+## Hierarchical Transformer Memory (HTM) - Pytorch
 
 Implementation of <a href="https://arxiv.org/abs/2105.14039">Hierarchical Transformer Memory</a> (HTM) for Pytorch. This Deepmind paper proposes a simple method to allow transformers to attend to memories of the past efficiently. This is largely based on the code <a href="https://github.com/deepmind/deepmind-research/tree/master/hierarchical_transformer_memory">here</a>.
 
@@ -26,8 +26,8 @@ attn = HTMAttention(
 )
 
 queries = torch.randn(1, 128, 512)     # your queries, in this example, 128 tokens
-memories = torch.randn(1, 8888, 512)   # memories, of any size, in this example 8888
-mask = torch.ones(1, 8888).bool()      # memory mask
+memories = torch.randn(1, 20000, 512)  # memories, of any size
+mask = torch.ones(1, 20000).bool()     # memory mask
 
 attended = attn(queries, memories, mask = mask) # (1, 128, 512)
 ```

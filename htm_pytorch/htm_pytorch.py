@@ -19,7 +19,7 @@ def pad_to_multiple(t, multiple, dim = -2, value = 0.):
     remainder = pad_to_len - seq_len
 
     if remainder == 0:
-        return t, 0
+        return t
 
     zeroes = (0, 0) * (-dim - 1)
     padded_t = F.pad(t, (*zeroes, remainder, 0), value = value)
