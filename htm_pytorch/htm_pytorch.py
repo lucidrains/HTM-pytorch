@@ -120,7 +120,8 @@ class HTMAttention(nn.Module):
         self,
         queries,
         memories,
-        mask = None
+        mask = None,
+        chunk_attn_mask = None
     ):
         dim, query_len, mem_chunk_size, topk_mems, scale, eps = self.dim, queries.shape[1], self.mem_chunk_size, self.topk_mems, self.scale, self.eps
 
@@ -153,12 +154,15 @@ class HTMAttention(nn.Module):
         # do a single head attention over summary keys
 
         sim = einsum('b i d, b j d -> b i j', summary_queries, summary_keys) * scale
+        mask_value = -torch.finfo(sim.dtype).max
 
         if exists(mask):
             chunk_mask = mask.any(dim = 2)
             chunk_mask = rearrange(chunk_mask, 'b j -> b () j')
-            mask_value = -torch.finfo(sim.dtype).max
             sim = sim.masked_fill(~chunk_mask, mask_value)
+
+        if exists(chunk_attn_mask):
+            sim = sim.masked_fill(~chunk_attn_mask, mask_value)
 
         topk_logits, topk_indices = sim.topk(k = topk_mems, dim = -1)
         weights = topk_logits.softmax(dim = -1)
@@ -212,8 +216,8 @@ class HTMBlock(nn.Module):
         self,
         queries,
         memories,
-        mask = None
+        **kwargs
     ):
         queries = self.norm(queries)
-        out = self.attn(queries, memories, mask = mask) + queries
+        out = self.attn(queries, memories, **kwargs) + queries
         return out
